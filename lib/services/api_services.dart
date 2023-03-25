@@ -29,4 +29,31 @@ class ApiServices {
       throw e.toString();
     }
   }
+
+  Future<List<CurrencyModel>> getExchangeCurrency(
+      {required String baseCurrency, required String targeCurrency}) async {
+    List<CurrencyModel> currencyModelList = [];
+
+    String url =
+        "${baseUrl}apikey=$apiKey&base_currency=$baseCurrency&currencies=$targeCurrency";
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> json = jsonDecode(response.body);
+        Map<String, dynamic> body = json['data'];
+
+        body.forEach((key, value) {
+          CurrencyModel currencyModel = CurrencyModel.fromJson(value);
+          currencyModelList.add(currencyModel);
+        });
+        return currencyModelList;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

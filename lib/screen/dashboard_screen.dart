@@ -38,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _selectedIndex = value;
           });
         },
-        items: [
+        items: const[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(
               icon: Icon(Icons.currency_exchange), label: "Exchange"),

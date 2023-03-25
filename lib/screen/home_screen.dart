@@ -2,7 +2,6 @@
 
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_picker_dropdown.dart';
-import 'package:country_currency_pickers/utils/utils.dart';
 import 'package:currency_converter/models/currency_model.dart';
 import 'package:currency_converter/services/api_services.dart';
 import 'package:currency_converter/widgets/all_currency_list.dart';
