@@ -3,6 +3,9 @@
 import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/country_picker_dropdown.dart';
 import 'package:country_currency_pickers/utils/utils.dart';
+import 'package:currency_converter/models/currency_model.dart';
+import 'package:currency_converter/services/api_services.dart';
+import 'package:currency_converter/widgets/all_currency_list.dart';
 import 'package:currency_converter/widgets/drop_down_item.dart';
 import 'package:flutter/material.dart';
 
@@ -42,14 +45,35 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
           ),
-        )
-      
-       ,SizedBox(height: 10),
+        ),
+        SizedBox(height: 10),
         Text(
           "All Currency",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         SizedBox(height: 8),
+        FutureBuilder(
+          future: ApiServices().getLatest(baseCurrency: _selectedCode),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              List<CurrencyModel> currencyModelList = snapshot.data ?? [];
+              return Expanded(
+                child: ListView.builder(
+                  itemCount: currencyModelList.length,
+                  itemBuilder: (context, index) {
+                    return AllCurrencyList(
+                      currencyModel: currencyModelList[index],
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        )
       ],
     );
   }
